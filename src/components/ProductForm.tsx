@@ -299,14 +299,25 @@ const ProductForm = ({ id = -1 }: { id: number }) => {
         <i className="icon angle left" />
         Back to list
       </a>
-      <a
-        href={`/products/${id}`}
-        style={{ position: 'absolute', right: 10, bottom: 10, fontSize: 15 }}
-        className="color_green"
-      >
-        Preview product
-        <i className="icon angle right" />
-      </a>
+      {id !== -1 ? (
+        <>
+          <a
+            href={`/products/${id}`}
+            style={{
+              position: 'absolute',
+              right: 10,
+              bottom: 10,
+              fontSize: 15,
+            }}
+            className="color_green"
+          >
+            Preview product
+            <i className="icon angle right" />
+          </a>
+        </>
+      ) : (
+        <></>
+      )}
     </Segment>
   )
 }

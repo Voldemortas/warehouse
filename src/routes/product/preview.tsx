@@ -75,7 +75,7 @@ const PreviewTable = ({
 
 const PriceChart = ({ Price }: Product) => {
   const PriceOptions: Highcharts.Options = {
-    chart: { width: Math.min(window.innerWidth - 30, 472), height: 355 + 14 },
+    chart: { width: Math.min(window.innerWidth - 30, 472), height: 355 + 24 },
     title: {
       text: 'Price history',
     },
@@ -100,7 +100,7 @@ const PriceChart = ({ Price }: Product) => {
 
 const AmountChart = ({ Amount }: Product) => {
   const PriceOptions: Highcharts.Options = {
-    chart: { width: Math.min(window.innerWidth - 30, 472), height: 355 + 14 },
+    chart: { width: Math.min(window.innerWidth - 30, 472), height: 355 + 24 },
     title: {
       text: 'Amount history',
     },

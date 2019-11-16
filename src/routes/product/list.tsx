@@ -140,6 +140,7 @@ const List = () => {
         unstackable
         className="listTable"
       >
+        <caption>Products</caption>
         {isSmallScreen() ? (
           <>
             <TableHeader>

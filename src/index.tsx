@@ -25,6 +25,9 @@ const ReactApp = () => {
   return (
     <StrictMode>
       <BrowserRouter>
+        <header>
+          <a href="/products">Warehouse</a>
+        </header>
         <Switch>
           <Route exact path="/products/create">
             <Create />
@@ -42,10 +45,18 @@ const ReactApp = () => {
             <Redirect to="/products" />
           </Route>
           <Route exact path="/404">
-            <>404</>
+            <>
+              404
+              <br />
+              Does not exist
+            </>
           </Route>
           <Route exact path="/400">
-            <>400</>
+            <>
+              400
+              <br />
+              Bad request
+            </>
           </Route>
           <Route path="*">
             <Redirect to="/404" />
