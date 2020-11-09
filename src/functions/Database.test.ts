@@ -78,3 +78,9 @@ test('Database Delete', async () => {
   await new Database().remove(1)
   expect((await new Database().products).length).toBe(1)
 })
+
+test('Database delete all', async () => {
+  const answer = await new Database().removeAll()
+  expect(answer.success).toBeTruthy()
+  expect(localStorage.getItem('products')).toBe('{"products":[],"nextId":0}')
+})

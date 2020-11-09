@@ -109,4 +109,18 @@ export default class Database {
       typeof product.Active === 'boolean'
     )
   }
+  async removeAll(): Promise<Message> {
+    await this.data()
+    localStorage.setItem(
+      'products',
+      JSON.stringify({
+        products: [],
+        nextId: 0,
+      })
+    )
+    return {
+      success: true,
+      message: `All Products were deleted`,
+    }
+  }
 }
