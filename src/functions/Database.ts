@@ -31,7 +31,7 @@ export default class Database {
     //else
     //  update
     const { products, nextId } = await this.data()
-    if (products.some((e) => e.EAN === value.EAN)) {
+    if (products.some((e) => e.EAN === value.EAN && e.id !== value.id)) {
       return {
         success: false,
         message: `Product with EAN ${value.EAN} alreayd exists`,

@@ -14,3 +14,8 @@ export type Message = {
   success: boolean
   message: string
 }
+
+export type sortKeys = {
+  key: keyof Product
+  direction: 0 | 1 | 2
+}

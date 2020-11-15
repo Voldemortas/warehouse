@@ -1,7 +1,9 @@
 import Database from './Database'
 import { Product } from '../interfaces'
 
-class LocalStorageMock {
+jest.setTimeout(10000)
+
+export class LocalStorageMock {
   private store: { [key: string]: string } | null
   length = -1
   key = () => ''
@@ -65,6 +67,13 @@ test('Database Edit', async () => {
     EAN: '12345678',
   })
   expect(answer3.success).toBeTruthy()
+  const answer4 = await new Database().put({
+    ...product,
+    id: 1,
+    EAN: '12345678',
+    Color: 'none',
+  })
+  expect(answer4.success).toBeTruthy()
 })
 
 test('Database Delete', async () => {

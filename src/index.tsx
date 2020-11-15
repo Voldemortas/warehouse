@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { Create, Edit, List, Preview } from './routes/product'
 import 'semantic-ui-css/semantic.min.css'
+import './style.scss'
 
 const ReactApp = () => {
   const [state, setState] = useState<{ width: number; height: number }>({

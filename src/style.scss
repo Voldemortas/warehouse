@@ -1,0 +1,73 @@
+$cell-lenght: 80px;
+
+body {
+  overflow-x: auto !important;
+  background-color: #111111;
+  color: #ffffff;
+}
+
+#root {
+  text-align: center;
+}
+
+.ui.message {
+  .close.icon {
+    top: 0.1em;
+    right: 0.1em;
+  }
+}
+
+.ui.small.modal {
+  width: fit-content;
+  color: #000000;
+}
+
+.cursor_pointer:hover {
+  cursor: pointer;
+}
+
+.color_red {
+  color: #ff0000;
+}
+
+.align_right {
+  text-align: right;
+}
+
+.align_left {
+  text-align: left;
+}
+
+.listTable {
+  .align_right {
+    text-align: right !important;
+  }
+
+  .align_left {
+    text-align: left !important;
+  }
+
+  width: 4.5 * $cell-lenght !important;
+  tr {
+    vertical-align: top;
+    td,
+    th {
+      text-align: center !important;
+      width: $cell-lenght;
+    }
+  }
+  &__mock {
+    border-style: solid !important;
+    border-width: 1px 0 0 0 !important;
+  }
+  &__action {
+    width: 1.5 * $cell-lenght !important;
+    min-width: 1.5 * $cell-lenght !important;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .listTable {
+    width: 7.5 * $cell-lenght !important;
+  }
+}
