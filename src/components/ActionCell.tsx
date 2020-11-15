@@ -48,9 +48,9 @@ const ActionCell = ({
         <TableCell>
           <MyCheckbox product={product} />
           <br />
-          <Link to={`products/${product.id}/edit`}>
+          <a href={`products/${product.id}/edit`}>
             <i className="icon edit" title="Edit" />
-          </Link>
+          </a>
           <Link to={`products/${product.id}`}>
             <i className="icon eye" title="Preview" />
           </Link>
@@ -68,9 +68,9 @@ const ActionCell = ({
             <MyCheckbox product={product} />
           </TableCell>
           <TableCell>
-            <Link to={`products/${product.id}/edit`}>
+            <a href={`products/${product.id}/edit`}>
               <i className="icon edit" title="Edit" />
-            </Link>
+            </a>
             <Link to={`products/${product.id}`}>
               <i className="icon eye" title="Preview" />
             </Link>

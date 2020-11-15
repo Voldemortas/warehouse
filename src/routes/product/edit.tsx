@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Redirect, useParams } from 'react-router-dom'
 import { Product, RouteParams } from '../../interfaces'
 import Database from '../../functions/Database'
+import ProductForm from '../../components/ProductForm'
 
 const Edit = () => {
   const { id } = useParams<RouteParams>()
@@ -24,7 +25,9 @@ const Edit = () => {
   return state.redirect ? (
     <Redirect to="/products" />
   ) : (
-    <>Edit {JSON.stringify(state.product)}</>
+    <>
+      <ProductForm id={+id} />
+    </>
   )
 }
 
