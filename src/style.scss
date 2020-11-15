@@ -21,13 +21,28 @@ body {
   width: fit-content;
   color: #000000;
 }
+.ui.toggle.checkbox input:checked {
+  ~ label:hover:before {
+    background-color: #3296ff !important;
+  }
+}
 
 .cursor_pointer:hover {
   cursor: pointer;
 }
 
 .color_red {
-  color: #ff0000;
+  color: #ba0000;
+  &:hover {
+    color: #990000;
+  }
+}
+
+.color_green {
+  color: #00ba00;
+  &:hover {
+    color: #009900;
+  }
 }
 
 .align_right {

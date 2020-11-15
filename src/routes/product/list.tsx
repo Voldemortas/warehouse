@@ -269,7 +269,11 @@ const List = () => {
                   />
                 </TableHeaderCell>
                 <TableHeaderCell colSpan="2" className="listTable__mock">
-                  <Link to="products/create" style={{ fontSize: 20 }}>
+                  <Link
+                    to="products/create"
+                    style={{ fontSize: 20 }}
+                    className="color_green"
+                  >
                     Add
                   </Link>
                 </TableHeaderCell>
