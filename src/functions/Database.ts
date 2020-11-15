@@ -52,6 +52,8 @@ export default class Database {
       return {
         success: true,
         message: `New Product ${value.Name} (${value.EAN}) was added`,
+        //@ts-ignore
+        id: nextId,
       }
     }
     if (products.some((e) => Database.isEqual(e, value, true))) {

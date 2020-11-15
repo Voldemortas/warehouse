@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom'
 import { Message } from 'semantic-ui-react'
 import { Message as message } from '../interfaces/index'
 
-const showToast = (res: message) => {
+const showToast = (res: message, handler = () => {}) => {
   ReactDOM.render(
     React.createElement(Toast, {
+      handler,
       ...res,
       date: new Date().getTime(),
     }),
@@ -17,17 +18,19 @@ const Toast = ({
   success,
   message,
   date,
+  handler,
 }: {
   success: boolean
   message: string
   date: number
+  handler: () => void
 }) => {
   const [state, setState] = useState<{ visible: boolean }>({ visible: true })
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     setState({ visible: true })
     return function cleanup() {
-      setState({ visible: true })
+      setState({ visible: false })
     }
   }, [message])
   useEffect(() => {
@@ -63,7 +66,16 @@ const Toast = ({
         success={success}
         error={!success}
         onDismiss={handleDismiss}
-        content={<div data-temp={date}>{message}</div>}
+        content={
+          <div data-temp={date}>
+            <span
+              onClick={handler}
+              style={{ whiteSpace: 'pre-wrap', textAlign: 'center' }}
+            >
+              {message}
+            </span>
+          </div>
+        }
       />
     </div>
   ) : (

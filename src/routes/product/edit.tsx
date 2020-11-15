@@ -19,6 +19,7 @@ const Edit = () => {
         setState({ ...state, product: product[0] })
       }
     })()
+    // eslint-disable-next-line
   }, [id])
   return state.redirect ? (
     <Redirect to="/products" />

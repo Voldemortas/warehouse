@@ -17,7 +17,6 @@ import {
   TableRow,
 } from 'semantic-ui-react'
 import ActionCell from '../../components/ActionCell'
-import { Link } from 'react-router-dom'
 
 const List = () => {
   const ref = useRef<Button>(null)
@@ -42,8 +41,8 @@ const List = () => {
         '#',
         ''
       )
-      if (currentPage > Math.ceil(response.length / 9)) {
-        currentPage = Math.ceil(response.length / 9)
+      if (currentPage > Math.ceil(response.length / 8)) {
+        currentPage = Math.ceil(response.length / 8)
         window.location.replace(`#${currentPage}`)
       }
       if (currentPage < 1) {
@@ -56,6 +55,7 @@ const List = () => {
         page: currentPage,
       })
     })()
+    // eslint-disable-next-line
   }, [state.products.length])
   const addMock = async () => {
     //@ts-ignore
@@ -158,7 +158,7 @@ const List = () => {
             <TableBody>
               {state.products
                 .sort(realSort)
-                .slice(9 * (state.page - 1), 9 * state.page)
+                .slice(8 * (state.page - 1), 8 * state.page + 1)
                 .map((e) => (
                   <TableRow key={e.EAN}>
                     <TableCell>
@@ -195,13 +195,17 @@ const List = () => {
                     firstItem={true}
                     lastItem={true}
                     siblingRange={1}
-                    totalPages={Math.ceil(state.products.length / 10)}
+                    totalPages={Math.ceil(state.products.length / 8)}
                   />
                 </TableHeaderCell>
                 <TableHeaderCell className="listTable__mock">
-                  <Link to="products/create" style={{ fontSize: 20 }}>
+                  <a
+                    href="products/create"
+                    style={{ fontSize: 20 }}
+                    className="color_green"
+                  >
                     Add
-                  </Link>
+                  </a>
                 </TableHeaderCell>
               </TableRow>
             </TableFooter>
@@ -234,7 +238,7 @@ const List = () => {
             <TableBody>
               {state.products
                 .sort(realSort)
-                .slice(9 * (state.page - 1), 9 * state.page)
+                .slice(8 * (state.page - 1), 8 * state.page + 1)
                 .map((e) => (
                   <TableRow key={e.EAN}>
                     <TableCell>{e.Name}</TableCell>
@@ -265,17 +269,17 @@ const List = () => {
                     firstItem={true}
                     lastItem={true}
                     siblingRange={1}
-                    totalPages={Math.ceil(state.products.length / 10)}
+                    totalPages={Math.ceil(state.products.length / 8)}
                   />
                 </TableHeaderCell>
                 <TableHeaderCell colSpan="2" className="listTable__mock">
-                  <Link
-                    to="products/create"
+                  <a
+                    href="products/create"
                     style={{ fontSize: 20 }}
                     className="color_green"
                   >
                     Add
-                  </Link>
+                  </a>
                 </TableHeaderCell>
               </TableRow>
             </TableFooter>
@@ -283,7 +287,7 @@ const List = () => {
         )}
       </Table>
       <Button id="addDb" ref={ref} onClick={addMock}>
-        Add mock data
+        Use mock data
       </Button>
     </div>
   )
