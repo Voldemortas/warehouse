@@ -30,7 +30,7 @@ const ProductForm = ({ id = -1 }: { id: number }) => {
       const elements = products.filter((e) => e.id === id)
       if (elements.length === 0 && id !== -1) {
         //@ts-ignore
-        window.location = '/400'
+        window.location.replace('/400')
       }
       let temp = elements[0]
       const defaultState: StateType = {
