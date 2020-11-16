@@ -10,7 +10,7 @@ beforeAll(async () => {
 test('Testing List', async () => {
   await page?.goto('http://localhost:2999')
   await page?.waitForTimeout(200)
-  expect(page?.url()).toBe('http://localhost:2999/products')
+  expect(page?.url()).toContain('http://localhost:2999/products')
   await page?.evaluate(() => {
     localStorage.setItem(
       'products',
@@ -71,7 +71,7 @@ test('Testing List', async () => {
 test('Edit route', async () => {
   await page?.goto('http://localhost:2999/products/0/edit')
   await page?.waitForTimeout(200)
-  expect(page?.url()).toBe('http://localhost:2999/products')
+  expect(page?.url()).toBe('http://localhost:2999/400')
 
   await page?.goto('http://localhost:2999/products/1/edit')
   await page?.waitForTimeout(200)
@@ -79,13 +79,13 @@ test('Edit route', async () => {
 
   await page?.goto('http://localhost:2999/products/6/edit')
   await page?.waitForTimeout(200)
-  expect(page?.url()).toBe('http://localhost:2999/products')
+  expect(page?.url()).toBe('http://localhost:2999/400')
 })
 
 test('Preview route', async () => {
   await page?.goto('http://localhost:2999/products/0')
   await page?.waitForTimeout(200)
-  expect(page?.url()).toBe('http://localhost:2999/products')
+  expect(page?.url()).toBe('http://localhost:2999/400')
 
   await page?.goto('http://localhost:2999/products/1')
   await page?.waitForTimeout(200)
@@ -93,7 +93,7 @@ test('Preview route', async () => {
 
   await page?.goto('http://localhost:2999/products/6')
   await page?.waitForTimeout(200)
-  expect(page?.url()).toBe('http://localhost:2999/products')
+  expect(page?.url()).toBe('http://localhost:2999/400')
 })
 
 test('Create route', async () => {

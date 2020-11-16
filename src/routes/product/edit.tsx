@@ -1,30 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { Redirect, useParams } from 'react-router-dom'
-import { Product, RouteParams } from '../../interfaces'
-import Database from '../../functions/Database'
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import { RouteParams } from '../../interfaces'
 import ProductForm from '../../components/ProductForm'
 
 const Edit = () => {
   const { id } = useParams<RouteParams>()
-  const [state, setState] = useState<{
-    product: Product | null
-    redirect: boolean
-  }>({ product: null, redirect: false })
-  useEffect(() => {
-    ;(async () => {
-      const db = await new Database().products
-      const product = db.filter((e) => e.id === +id)
-      if (product.length === 0) {
-        setState({ ...state, redirect: true })
-      } else {
-        setState({ ...state, product: product[0] })
-      }
-    })()
-    // eslint-disable-next-line
-  }, [id])
-  return state.redirect ? (
-    <Redirect to="/products" />
-  ) : (
+  return (
     <>
       <ProductForm id={+id} />
     </>

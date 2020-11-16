@@ -11,7 +11,7 @@ const Preview = () => {
       const db = await new Database().products
       const product = db.filter((e) => e.id === +id)
       if (product.length === 0) {
-        window.location.href = '/products'
+        window.location.href = '/400'
       } else {
         setState(product[0])
       }

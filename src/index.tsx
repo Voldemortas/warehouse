@@ -26,23 +26,29 @@ const ReactApp = () => {
     <StrictMode>
       <BrowserRouter>
         <Switch>
-          <Route path="/products/create">
+          <Route exact path="/products/create">
             <Create />
           </Route>
-          <Route path="/products/:id/edit">
+          <Route exact path="/products/:id/edit">
             <Edit />
           </Route>
-          <Route path="/products/:id">
+          <Route exact path="/products/:id">
             <Preview />
           </Route>
-          <Route path="/products">
+          <Route exact path="/products">
             <List />
           </Route>
           <Route exact path="/">
             <Redirect to="/products" />
           </Route>
-          <Route path="*">
+          <Route exact path="/404">
             <>404</>
+          </Route>
+          <Route exact path="/400">
+            <>400</>
+          </Route>
+          <Route path="*">
+            <Redirect to="/404" />
           </Route>
         </Switch>
       </BrowserRouter>
