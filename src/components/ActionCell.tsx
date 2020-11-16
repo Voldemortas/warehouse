@@ -41,7 +41,7 @@ const ActionCell = ({
   product: Product
   setConfirmState: (newState: { open: boolean; EAN: string | null }) => void
 }) => {
-  const isSmallScreen = () => window.innerWidth < 600
+  const isSmallScreen = () => window.innerWidth < 760
   return (
     <>
       {isSmallScreen() ? (

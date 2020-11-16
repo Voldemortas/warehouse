@@ -1,6 +1,12 @@
 export interface RouteParams {
   id: string
 }
+
+export type numDatePair = {
+  value: number
+  date: number
+}
+
 export type Product = {
   id: number
   Name: string
@@ -9,6 +15,8 @@ export type Product = {
   Weight: number
   Color: string
   Active: boolean
+  Price: numDatePair[]
+  Amount: numDatePair[]
 }
 export type Message = {
   success: boolean

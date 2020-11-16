@@ -70,7 +70,7 @@ const List = () => {
     window.location.replace(`#1`)
     realRef.removeAttribute('disabled')
   }
-  const isSmallScreen = () => window.innerWidth < 600
+  const isSmallScreen = () => window.innerWidth < 760
   const sort = (key: keyof Product) => {
     setState({
       ...state,
@@ -87,10 +87,16 @@ const List = () => {
     if (state.sort.direction === 0) {
       return a.id - b.id
     }
-    const numbers = ['']
-    if (numbers.includes(state.sort.key)) {
+    const numbers = ['Price', 'Amount']
+    if (state.sort.key === 'id') {
       const key = state.sort.key as 'id'
       return state.sort.direction === 1 ? a[key] - b[key] : b[key] - a[key]
+    }
+    if (numbers.includes(state.sort.key)) {
+      const key = state.sort.key as 'Price' | 'Amount'
+      return state.sort.direction === 1
+        ? a[key][0].value - b[key][0].value
+        : b[key][0].value - a[key][0].value
     } else {
       const key = state.sort.key
       return state.sort.direction === 1
@@ -143,8 +149,8 @@ const List = () => {
                   <HeaderCell text="Color" callback={sort} sort={state.sort} />
                 </TableHeaderCell>
                 <TableHeaderCell>
-                  <HeaderCell text="Type" callback={sort} sort={state.sort} />
-                  <HeaderCell text="Weight" callback={sort} sort={state.sort} />
+                  <HeaderCell text="Price" callback={sort} sort={state.sort} />
+                  <HeaderCell text="Amount" callback={sort} sort={state.sort} />
                 </TableHeaderCell>
                 <TableHeaderCell>
                   <HeaderCell text="EAN" callback={sort} sort={state.sort} />
@@ -167,9 +173,9 @@ const List = () => {
                       {e.Color}
                     </TableCell>
                     <TableCell>
-                      {e.Type}
+                      {e.Price[0].value}
                       <br />
-                      {e.Weight}
+                      {e.Amount[0].value}
                     </TableCell>
                     <TableCell>{e.EAN}</TableCell>
                     <ActionCell
@@ -221,6 +227,12 @@ const List = () => {
                   <HeaderCell text="Color" callback={sort} sort={state.sort} />
                 </TableHeaderCell>
                 <TableHeaderCell>
+                  <HeaderCell text="Price" callback={sort} sort={state.sort} />
+                </TableHeaderCell>
+                <TableHeaderCell>
+                  <HeaderCell text="Amount" callback={sort} sort={state.sort} />
+                </TableHeaderCell>
+                <TableHeaderCell>
                   <HeaderCell text="Type" callback={sort} sort={state.sort} />
                 </TableHeaderCell>
                 <TableHeaderCell>
@@ -243,6 +255,8 @@ const List = () => {
                   <TableRow key={e.EAN}>
                     <TableCell>{e.Name}</TableCell>
                     <TableCell>{e.Color}</TableCell>
+                    <TableCell>{e.Price[0].value}</TableCell>
+                    <TableCell>{e.Amount[0].value}</TableCell>
                     <TableCell>{e.Type}</TableCell>
                     <TableCell>{e.Weight}</TableCell>
                     <TableCell>{e.EAN}</TableCell>
@@ -257,7 +271,7 @@ const List = () => {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableHeaderCell colSpan="5" className="align_left">
+                <TableHeaderCell colSpan="7" className="align_left">
                   <Pagination
                     onPageChange={(e, { activePage }) => {
                       window.location.replace(`#${activePage}`)

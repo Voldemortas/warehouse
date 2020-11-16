@@ -9,6 +9,8 @@ const product: Product = {
   EAN: '123456',
   Type: 'type test',
   Weight: 20,
+  Price: [{ value: 20, date: -1 }],
+  Amount: [{ value: 20, date: -1 }],
 }
 
 export default async function addMock(): Promise<boolean> {

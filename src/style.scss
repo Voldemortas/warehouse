@@ -116,9 +116,9 @@ body {
   }
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 760px) {
   .listTable {
-    width: 7.5 * $cell-lenght !important;
+    width: 9.5 * $cell-lenght !important;
   }
 }
 @media screen and (min-width: 768px) {

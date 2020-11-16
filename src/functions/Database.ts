@@ -1,4 +1,4 @@
-import { Product, Message } from '../interfaces'
+import { Product, Message, numDatePair } from '../interfaces'
 
 //pseudo frontend<->backend
 export default class Database {
@@ -30,7 +30,12 @@ export default class Database {
     //  return was equal
     //else
     //  update
+    const uploadDate = new Date().getTime()
     const { products, nextId } = await this.data()
+    value = { ...value }
+    value.Price[0].date = uploadDate
+    value.Amount[0].date = uploadDate
+
     if (products.some((e) => e.EAN === value.EAN && e.id !== value.id)) {
       return {
         success: false,
@@ -44,7 +49,7 @@ export default class Database {
       }
     }
     if (value.id === -1) {
-      value = { ...value, id: nextId }
+      value.id = nextId
       localStorage.setItem(
         'products',
         JSON.stringify({ products: [...products, value], nextId: nextId + 1 })
@@ -59,10 +64,50 @@ export default class Database {
     if (products.some((e) => Database.isEqual(e, value, true))) {
       return { success: false, message: `No changes were made` }
     }
+    console.log(value.Price)
+    const newProducts = [
+      ...products.map((e) =>
+        e.id === value.id
+          ? {
+              ...value,
+              Amount: [...value.Amount, ...e.Amount],
+              Price: [...value.Price, ...e.Price],
+            }
+          : e
+      ),
+    ]
+    console.log(newProducts.filter((e) => e.id === value.id)[0])
     localStorage.setItem(
       'products',
       JSON.stringify({
-        products: [...products.map((e) => (e.id === value.id ? value : e))],
+        products: newProducts
+          .map((e) => {
+            let temp = { ...e }
+            temp.Price = e.Price.reduce((acc: numDatePair[], cur, index) => {
+              if (index === 0) {
+                return [cur]
+              }
+              if (acc[index - 1].value === cur.value) {
+                console.log(acc[index - 1], cur)
+                return acc
+              }
+              return [...acc, cur]
+            }, [])
+            return temp
+          })
+          .map((e) => {
+            let temp = { ...e }
+            temp.Amount = e.Amount.reduce((acc: numDatePair[], cur, index) => {
+              if (index === 0) {
+                return [cur]
+              }
+              if (acc[index - 1].value === cur.value) {
+                return acc
+              }
+              return [...acc, cur]
+            }, [])
+            return temp
+          }),
         nextId,
       })
     )
@@ -97,18 +142,37 @@ export default class Database {
       a.EAN === b.EAN &&
       a.Name === b.Name &&
       a.Type === b.Type &&
-      a.Weight === b.Weight
+      a.Weight === b.Weight &&
+      a.Price[0].value === b.Price[0].value &&
+      a.Amount[0].value === b.Amount[0].value
     return id ? equality && a.id === b.id : equality
   }
   private static hasAllProps(product: Product): boolean {
     return (
       typeof product.id === 'number' &&
       typeof product.Weight === 'number' &&
+      product.Weight >= 0 &&
       typeof product.Type === 'string' &&
       typeof product.Name === 'string' &&
       typeof product.EAN === 'string' &&
       typeof product.Color === 'string' &&
-      typeof product.Active === 'boolean'
+      typeof product.Active === 'boolean' &&
+      product.Price.reduce(
+        (acc: boolean, cur) =>
+          acc &&
+          typeof cur.date === 'number' &&
+          cur.value >= 0 &&
+          typeof cur.value === 'number',
+        true
+      ) &&
+      product.Amount.reduce(
+        (acc: boolean, cur) =>
+          acc &&
+          typeof cur.date === 'number' &&
+          cur.value >= 0 &&
+          typeof cur.value === 'number',
+        true
+      )
     )
   }
   async removeAll(): Promise<Message> {

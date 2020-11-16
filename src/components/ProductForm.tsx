@@ -11,47 +11,65 @@ type typeInput = {
 
 const defaultInput: typeInput = { success: null, message: '', value: '' }
 
+type StateType = {
+  Name: typeInput
+  Color: typeInput
+  Type: typeInput
+  Weight: typeInput
+  EAN: typeInput
+  Active: typeInput
+  Price: typeInput
+  Amount: typeInput
+}
+
 const ProductForm = ({ id = -1 }: { id: number }) => {
-  const [state, setState] = useState<{
-    Name: typeInput
-    Color: typeInput
-    Type: typeInput
-    Weight: typeInput
-    EAN: typeInput
-    Active: typeInput
-  } | null>(null)
+  const [state, setState] = useState<StateType | null>(null)
   useEffect(() => {
-    if (id === -1) {
-      return
-    }
     ;(async () => {
       const products = await new Database().products
       const elements = products.filter((e) => e.id === id)
-      if (elements.length === 0) {
+      if (elements.length === 0 && id !== -1) {
         //@ts-ignore
         window.location = '/404'
       }
       let temp = elements[0]
-      const defaultState = {
+      const defaultState: StateType = {
         Name: { ...defaultInput, message: `Name cannot be empty` },
         Color: { ...defaultInput, success: true },
         Type: { ...defaultInput, message: `Type cannot be empty` },
         Weight: { message: '', value: 0, success: true },
         EAN: { ...defaultInput, message: `EAN cannot be empty` },
         Active: { value: false, message: '', success: true },
+        Price: { value: 0, message: '', success: true },
+        Amount: { value: 0, message: '', success: true },
       }
       if (id === -1) {
         setState(defaultState)
+      } else {
+        setState({
+          ...defaultState,
+          Name: { ...defaultState!.Name, value: temp.Name, success: true },
+          Color: { ...defaultState!.Color, value: temp.Color, success: true },
+          EAN: { ...defaultState!.EAN, value: temp.EAN, success: true },
+          Type: { ...defaultState!.Type, value: temp.Type, success: true },
+          Weight: {
+            ...defaultState!.Weight,
+            value: temp.Weight,
+            success: true,
+          },
+          Active: { ...defaultState!.Active, value: temp.Active },
+          Price: {
+            ...defaultState!.Price,
+            value: temp.Price[0].value,
+            success: true,
+          },
+          Amount: {
+            ...defaultState!.Amount,
+            value: temp.Amount[0].value,
+            success: true,
+          },
+        })
       }
-      setState({
-        ...defaultState,
-        Name: { ...defaultState!.Name, value: temp.Name, success: true },
-        Color: { ...defaultState!.Color, value: temp.Color, success: true },
-        EAN: { ...defaultState!.EAN, value: temp.EAN, success: true },
-        Type: { ...defaultState!.Type, value: temp.Type, success: true },
-        Weight: { ...defaultState!.Weight, value: temp.Weight, success: true },
-        Active: { ...defaultState!.Active, value: temp.Active },
-      })
     })()
   }, [id])
   if (state === null) {
@@ -90,7 +108,7 @@ const ProductForm = ({ id = -1 }: { id: number }) => {
             setState(newState)
             return
           }
-          const response = await new Database().put({
+          const dataToSend = {
             id,
             Name: state?.Name.value + '',
             EAN: state?.EAN.value + '',
@@ -98,7 +116,10 @@ const ProductForm = ({ id = -1 }: { id: number }) => {
             Type: state?.Type.value + '',
             Weight: +state?.Weight.value,
             Color: state?.Color.value + '',
-          })
+            Amount: [{ value: +state?.Amount.value, date: -1 }],
+            Price: [{ value: +state?.Price.value, date: -1 }],
+          }
+          const response = await new Database().put(dataToSend)
           showToast(
             {
               ...response,
@@ -187,6 +208,40 @@ const ProductForm = ({ id = -1 }: { id: number }) => {
         </Form.Group>
         <Form.Group widths="equal">
           <Form.Input
+            label="Product price (€)"
+            placeholder="Product price"
+            type="number"
+            defaultValue={state?.Price.value}
+            onChange={(e) => {
+              setState({
+                ...state!,
+                Price: {
+                  ...state?.Price,
+                  value: Math.max(+e.target.value, 0),
+                },
+              })
+              e.target.value = Math.max(+e.target.value, 0) + ''
+            }}
+          />
+          <Form.Input
+            label="Amout of products"
+            placeholder="Amount"
+            type="number"
+            defaultValue={state?.Amount.value}
+            onChange={(e) => {
+              setState({
+                ...state!,
+                Amount: {
+                  ...state?.Amount,
+                  value: Math.max(+e.target.value, 0),
+                },
+              })
+              e.target.value = Math.max(+e.target.value, 0) + ''
+            }}
+          />
+        </Form.Group>
+        <Form.Group widths="equal">
+          <Form.Input
             placeholder="EAN"
             label={state?.EAN.success === false ? state?.EAN.message : 'EAN'}
             error={state?.EAN.success === false}
@@ -233,7 +288,9 @@ const ProductForm = ({ id = -1 }: { id: number }) => {
             defaultChecked={state?.Active.value as boolean}
           />
         </Form.Group>
-        <Form.Button className="form__button">Insert new product!</Form.Button>
+        <Form.Button className="form__button">
+          {id === -1 ? 'Insert new product!' : 'Update product!'}
+        </Form.Button>
       </Form>
     </Segment>
   )
