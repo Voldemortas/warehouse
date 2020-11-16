@@ -1,4 +1,8 @@
 $cell-lenght: 80px;
+@function get-vw($target) {
+  $vw-context: (1000 * 0.01) * 1px;
+  @return ($target/$vw-context) * 1vw;
+}
 
 body {
   overflow-x: auto !important;
@@ -15,6 +19,7 @@ body {
   display: inline-block;
   max-width: 320px;
   width: 320px;
+  padding-bottom: 45px !important;
   label {
     text-align: left;
   }
@@ -68,14 +73,16 @@ body {
 
 .color_red {
   color: #ba0000;
-  &:hover {
+  &:hover,
+  &:active {
     color: #990000;
   }
 }
 
 .color_green {
   color: #00ba00;
-  &:hover {
+  &:hover,
+  &:active {
     color: #009900;
   }
 }
@@ -116,6 +123,37 @@ body {
   }
 }
 
+.preview {
+  text-align: center;
+  display: inline-block;
+  max-width: 500px;
+  width: 100%;
+  padding-bottom: 45px !important;
+  &__tab div {
+    display: contents !important;
+    text-align: center;
+    a {
+      display: inline-block !important;
+      max-width: 100px;
+    }
+  }
+  &__table {
+    display: inline-block;
+    width: 280px !important;
+    th {
+      width: 80px;
+      border-width: 0 0 1px 0;
+      border-style: solid;
+      border-left: 1px;
+      text-align: center;
+    }
+    td {
+      width: 200px;
+      border-width: 0 0 1px 0 !important;
+      border-style: solid;
+    }
+  }
+}
 @media screen and (min-width: 760px) {
   .listTable {
     width: 9.5 * $cell-lenght !important;

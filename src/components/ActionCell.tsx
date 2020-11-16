@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { Checkbox, TableCell } from 'semantic-ui-react'
 import Database from '../functions/Database'
 import { Product } from '../interfaces/index'
@@ -51,9 +50,9 @@ const ActionCell = ({
           <a href={`products/${product.id}/edit`}>
             <i className="icon edit" title="Edit" />
           </a>
-          <Link to={`products/${product.id}`}>
+          <a href={`products/${product.id}`}>
             <i className="icon eye" title="Preview" />
-          </Link>
+          </a>
           <i
             className="icon trash color_red cursor_pointer"
             title="Delete"
@@ -71,9 +70,9 @@ const ActionCell = ({
             <a href={`products/${product.id}/edit`}>
               <i className="icon edit" title="Edit" />
             </a>
-            <Link to={`products/${product.id}`}>
+            <a href={`products/${product.id}`}>
               <i className="icon eye" title="Preview" />
-            </Link>
+            </a>
             <i
               className="icon trash color_red cursor_pointer"
               title="Delete"
