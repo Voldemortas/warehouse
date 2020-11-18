@@ -1,3 +1,3 @@
 # Warehouse
 
-Live preview: http://warehouse.andriaus.lt/products
+Live preview: http://warehouse.andriaus.lt

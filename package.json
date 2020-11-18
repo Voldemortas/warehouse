@@ -2,7 +2,7 @@
   "name": "warehouse",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://warehouse.andriaus.lt/products",
+  "homepage": "http://warehouse.andriaus.lt",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
