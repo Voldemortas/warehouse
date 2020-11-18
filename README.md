@@ -1,3 +1,3 @@
 # Warehouse
 
-Live preview: http://voldemortas.github.io/warehouse
+Live preview: http://warehouse.andriaus.lt/products
